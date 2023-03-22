@@ -1,0 +1,60 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="row">
+    <div class="col-sm-12">
+        <table class="table table-bordered table-striped" id="tblAluno">
+            <thead>
+                <tr>
+                    <th scope="col">Id</th>
+                    <th scope="col">Nome</th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+</div>
+
+@section scripts{
+    <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#tblAluno')
+                .DataTable({
+                    "ajax": {
+                        "url": "/Home/GetData",
+                        "type": "GET",
+                        "dataSrc": "alunos"
+                    },
+                    serverSide: true,
+                    processing: true,
+                    filter: true,
+                    searchDelay: 5000,
+                    "columns": [
+                        {
+                            "data": "id"
+                        },
+                        {
+                            "data": "nome"
+                        }
+                    ],
+                    "language": {
+                        "lengthMenu": "Exibe _MENU_ Registros por página",
+                        "search": "Procurar",
+                        "processing": "Carregando...",
+                        "paginate": { "previous": "Retorna", "next": "Avança" },
+                        "zeroRecords": "Nada foi encontrado",
+                        "info": "Exibindo página _PAGE_ de _PAGES_",
+                        "infoEmpty": "Sem registros",
+                        "infoFiltered": "(filtrado de _MAX_ regitros totais)"
+                    },
+                    "pageLength": 10,
+                    "lengthMenu": [
+                        [10, 25, 50, 100, 1000],
+                        [10, 25, 50, 100, 1000]
+                    ]
+                });
+        });
+    </script>
+}
